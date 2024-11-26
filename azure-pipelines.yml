@@ -25,6 +25,8 @@ steps:
     pathToPublish: '$(Build.ArtifactStagingDirectory)'
     artifactName: 'drop'
 
+- task: PublishBuildArtifacts@1
+
 # Deploy to Azure Web App
 - task: AzureWebApp@1
   inputs:
@@ -32,5 +34,3 @@ steps:
     appName: 'abbas-sleiman-webapp'
     appType: webApp
     package: '$(Pipeline.Workspace)/drop'
-
-- task: PublishBuildArtifacts@1
