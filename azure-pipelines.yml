@@ -1,30 +1,35 @@
 trigger:
 - main
 
-pool: Project-self-hosted-agent
+pool:
+  vmImage: 'Project-self-hosted-agent'
 
 steps:
-- task: NodeTool@0
+- task: UseNode@1
   inputs:
-    versionSpec: '20.x'
+    version: '20.x'
   displayName: 'Install Node.js'
 
 - script: |
     npm install
+  displayName: 'npm install'
+
+- script: |
     npm run build
-  displayName: 'npm install and build'
+  displayName: 'npm build'
 
-# Publish build artifacts (client)
-- task: PublishBuildArtifacts@1
+- task: CopyFiles@2
   inputs:
-    pathToPublish: '$(Build.ArtifactStagingDirectory)/dist'  # Adjust this to the correct output folder
-    artifactName: 'client-artifacts'
-    publishLocation: 'Container'  # Default location to publish artifacts
+    sourceFolder: '$(Build.SourcesDirectory)'
+    contents: |
+       src/*
+       public/*
+    targetFolder: '$(Build.ArtifactStagingDirectory)'
+  displayName: 'Copy project files'
 
-# Deploy to Azure Web App
-- task: AzureWebApp@1
+- task: PublishPipelineArtifact@1
   inputs:
-    azureSubscription: 'azureConnectionString'
-    appName: 'abbas-sleiman-webapp'
-    appType: webApp
-    package: '$(Build.ArtifactStagingDirectory)/dist'  # Adjust this to the correct output folder
+    artifactName: e2e-server
+    targetPath: '$(Build.ArtifactStagingDirectory)'
+    publishLocation: 'pipeline'
+  displayName: 'Publish npm artifact'
