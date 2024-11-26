@@ -23,7 +23,7 @@ steps:
 - task: PublishBuildArtifacts@1
   inputs:
     pathToPublish: '$(Build.ArtifactStagingDirectory)'
-    artifactName: 'drop'
+    artifactName: 'client-artifacts'
 
 - task: PublishBuildArtifacts@1
 
@@ -33,4 +33,4 @@ steps:
     azureSubscription: 'azureConnectionSub'
     appName: 'abbas-sleiman-webapp'
     appType: webApp
-    package: '$(Pipeline.Workspace)/drop'
+    package: '$(Pipeline.Workspace)/s'
