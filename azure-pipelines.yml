@@ -1,8 +1,7 @@
 trigger:
 - main
 
-pool:
-  vmImage: 'Project-self-hosted-agent'
+pool: 'Project-self-hosted-agent'
 
 steps:
 - task: UseNode@1
