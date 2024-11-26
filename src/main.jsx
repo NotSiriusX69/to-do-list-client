@@ -3,6 +3,8 @@ import { createRoot } from 'react-dom/client'
 
 import App from './App.jsx'
 
+// visible
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <App />
