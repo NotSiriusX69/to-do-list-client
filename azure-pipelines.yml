@@ -32,3 +32,11 @@ steps:
     targetPath: '$(Build.ArtifactStagingDirectory)'
     publishLocation: 'pipeline'
   displayName: 'Publish npm artifact'
+  
+# Deploy to Azure Web App
+- task: AzureWebApp@1
+  inputs:
+    azureSubscription: 'azureConnectionString'
+    appName: 'abbas-sleiman-webapp'
+    appType: webApp
+    package: '$(Build.ArtifactStagingDirectory)' 
